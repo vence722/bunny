@@ -1,0 +1,9 @@
+{
+	"rabbitMQ": {
+		"host": "mustang.rmq.cloudamqp.com",
+		"port": 5672,
+		"username": "jmyprjuo",
+		"password": "3mAPn2eJHoRbdFeAd5ixI1D1m2Ei7KcI",
+		"vhost": "jmyprjuo"
+	}
+}
