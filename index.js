@@ -1,4 +1,3 @@
 module.exports = {
-	Consumer: require('./lib/consumer'),
-	Producer: require('./lib/producer')
+	Client: require('./lib/client')
 };
