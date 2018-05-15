@@ -17,7 +17,10 @@ async function demoProducer() {
 	try {
 		await producer.connect();
 		while (true) {
+			// console.log('before put job');
 			await producer.put("" + new Date().getTime());
+			// console.log('after put job');
+			await sleep(100);
 		}
 	} catch (e) {
 		console.log(e);
@@ -33,8 +36,12 @@ async function demoConsumer() {
 			const job = await consumer.consume();
 			if (job) {
 				console.log(`messageId: ${job.jobId}, content: ${job.content.toString()}`);
+				if (job.jobId % 10 === 0) {
+					console.log('bury job, jobId:', job.jobId)
+					consumer.bury(job);
+					continue;
+				}
 				consumer.delete(job);
-				// consumer.bury(job);
 			}
 		}
 	} catch (e) {
@@ -49,7 +56,9 @@ async function demoKick() {
 	try {
 		await client.connect();
 		while (true) {
+			console.log('before kick');
 			await client.kick(10);
+			console.log('after kick');
 		}
 	} catch (e) {
 		console.log(e);
@@ -57,6 +66,6 @@ async function demoKick() {
 	await client.close();
 }
 
-// demoProducer();
-demoConsumer();
-demoKick();
+demoProducer();
+// demoConsumer();
+// demoKick();
